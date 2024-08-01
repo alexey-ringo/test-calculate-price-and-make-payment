@@ -16,7 +16,9 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.1.*",
         "symfony/runtime": "7.1.*",
-        "symfony/yaml": "7.1.*"
+        "symfony/validator": "7.1.*",
+        "symfony/yaml": "7.1.*",
+        "systemeio/test-for-candidates": "^1.0"
     },
     "config": {
         "allow-plugins": {
