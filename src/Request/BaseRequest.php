@@ -2,8 +2,11 @@
 
 namespace App\Request;
 
+use App\Exception\ApiException;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 abstract class BaseRequest
@@ -19,32 +22,37 @@ abstract class BaseRequest
 
     public function validate()
     {
-        $errors = $this->validator->validate($this);
+        $validateResult = $this->validator->validate($this);
 
-        $messages = ['message' => 'validation_failed', 'errors' => []];
+//        $messages = ['message' => 'validation_failed', 'errors' => []];
 
-        /** @var \Symfony\Component\Validator\ConstraintViolation  */
-        foreach ($errors as $message) {
-            $messages['errors'][] = [
-                'property' => $message->getPropertyPath(),
-                'value' => $message->getInvalidValue(),
-                'message' => $message->getMessage(),
+        /** @var ConstraintViolation $validateResult */
+
+        $errors = [];
+        foreach ($validateResult as $item) {
+            $errors[] = [
+                'property' => $item->getPropertyPath(),
+                'value' => $item->getInvalidValue(),
+                'message' => $item->getMessage(),
             ];
         }
 
-        if (count($messages['errors']) > 0) {
-            $response = new JsonResponse($messages, 201);
-            $response->send();
-
-            exit;
+        if (count($errors) > 0) {
+            throw new ApiException('Validation failed', 422, $errors);
+//            $response = new JsonResponse($messages, 201);
+//            $response->send();
+//
+//            exit;
+//            throw new ValidationException($messages['errors']);
         }
+
     }
 
     public function getRequest(): Request
     {
         return Request::createFromGlobals();
     }
-
+//
     protected function populate(): void
     {
         foreach ($this->getRequest()->toArray() as $property => $value) {
@@ -53,7 +61,7 @@ abstract class BaseRequest
             }
         }
     }
-
+//
     protected function autoValidateRequest(): bool
     {
         return true;

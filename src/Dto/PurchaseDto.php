@@ -8,7 +8,8 @@ readonly class PurchaseDto
     public function __construct(
         private int    $product,
         private string $taxNumber,
-        private string $couponCode
+        private string $couponCode,
+        private string $paymentProcessor,
     ) {}
 
     public function getProduct(): int
@@ -24,5 +25,10 @@ readonly class PurchaseDto
     public function getCouponCode(): string
     {
         return $this->couponCode;
+    }
+
+    public function getPaymentProcessor(): string
+    {
+        return $this->paymentProcessor;
     }
 }
