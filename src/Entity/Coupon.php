@@ -16,6 +16,14 @@ class Coupon
     private int $id;
 
     #[ORM\Column(
+        name: 'code',
+        type: 'string',
+        length: 16,
+        options: ['comment' => 'coupon code']
+    )]
+    private string $code;
+
+    #[ORM\Column(
         name: 'name',
         type: 'string',
         length: 255,
@@ -45,6 +53,18 @@ class Coupon
 
         return $this;
     }
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
 
     public function getName(): string
     {

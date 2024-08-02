@@ -3,33 +3,26 @@ declare(strict_types=1);
 
 namespace App\Request;
 
+use App\Constraint\CheckEntity;
+use App\Entity\Coupon;
+use App\Entity\Product;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CalculatePriceRequest
+class CalculatePriceRequest extends BaseRequest
 {
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private mixed $product;
+    #[CheckEntity(Product::class, 'exists', 'id')]
+    public readonly mixed $product;
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
     #[Assert\Length(min: 3, max: 5)]
-    private mixed $taxNumber;
-
+    public readonly mixed $taxNumber;
 
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 5)]
-    private mixed $couponCode;
-
-    public function __construct(
-        mixed $product,
-        mixed $taxNumber,
-        mixed $couponCode
-    ) {
-        $this->product = $product;
-        $this->taxNumber = $taxNumber;
-        $this->couponCode = $couponCode;
-    }
+    #[CheckEntity(Coupon::class, 'exists', 'id')]
+    public readonly mixed $couponCode;
 
     public function getProduct(): mixed
     {

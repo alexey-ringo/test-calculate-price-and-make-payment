@@ -3,36 +3,31 @@ declare(strict_types=1);
 
 namespace App\Request;
 
+use App\Constraint\CheckEntity;
+use App\Constraint\CheckEnum;
+use App\Entity\Coupon;
+use App\Entity\Product;
+use App\Enum\PaymentProcessorEnum;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class PurchaseRequest
+class PurchaseRequest extends BaseRequest
 {
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-    private mixed $product;
+//    #[CheckEntity(Product::class, 'exists', 'id')]
+    public mixed $product;
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 5)]
-    private mixed $taxNumber;
+    public mixed $taxNumber;
 
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 5)]
-    private mixed $couponCode;
+//    #[CheckEntity(Coupon::class, 'exists', 'id')]
+    public mixed $couponCode;
 
     #[Assert\Type('string')]
-    #[Assert\Length(min: 3, max: 5)]
-    private mixed $paymentProcessor;
-
-    public function __construct(
-        mixed $product,
-        mixed $taxNumber,
-        mixed $couponCode
-    ) {
-        $this->product = $product;
-        $this->taxNumber = $taxNumber;
-        $this->couponCode = $couponCode;
-    }
+    #[CheckEnum(PaymentProcessorEnum::class)]
+    public mixed $paymentProcessor;
 
     public function getProduct(): mixed
     {
