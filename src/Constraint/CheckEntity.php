@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Constraint;
 
+use App\Validator\CheckEntityValidator;
 use App\Validator\CheckEnumValidator;
 use Attribute;
 use Symfony\Component\Validator\Constraint;
@@ -43,7 +44,7 @@ final class CheckEntity extends Constraint
 
     public function validatedBy(): string
     {
-        return CheckEnumValidator::class;
+        return CheckEntityValidator::class;
     }
 
     /**

@@ -21,7 +21,7 @@ class CalculatePriceRequest extends BaseRequest
     public readonly mixed $taxNumber;
 
     #[Assert\Type('string')]
-    #[CheckEntity(Coupon::class, 'exists', 'id')]
+    #[CheckEntity(Coupon::class, 'exists', 'code')]
     public readonly mixed $couponCode;
 
     public function getProduct(): mixed

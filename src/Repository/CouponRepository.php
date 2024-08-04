@@ -26,7 +26,7 @@ final class CouponRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function exists(string $value, string $field): bool
+    public function exists(int|string $value, string $field): bool
     {
         $queryBuilder = $this->createQueryBuilder('c')
             ->where('c.'.$field.' = :value')
@@ -63,26 +63,26 @@ final class CouponRepository extends ServiceEntityRepository
             ->setParameter('id', $id);
     }
 
-    public function save(Coupon $product): void
+    public function save(Coupon $coupon): void
     {
         $entityManager = $this->getEntityManager();
 
-        $entityManager->persist($product);
+        $entityManager->persist($coupon);
         $entityManager->flush();
     }
 
-    public function persist(Coupon $product): void
+    public function persist(Coupon $coupon): void
     {
         $entityManager = $this->getEntityManager();
 
-        $entityManager->persist($product);
+        $entityManager->persist($coupon);
     }
 
-    public function remove(Coupon $product): void
+    public function remove(Coupon $coupon): void
     {
         $entityManager = $this->getEntityManager();
 
-        $entityManager->remove($product);
+        $entityManager->remove($coupon);
         $entityManager->flush();
     }
 

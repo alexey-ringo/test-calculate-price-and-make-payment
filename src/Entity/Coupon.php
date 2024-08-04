@@ -4,14 +4,27 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Enum\DiscountTypeEnum;
-use App\Repository\ProductRepository;
+use App\Repository\CouponRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
+use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
-#[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\Entity(repositoryClass: CouponRepository::class)]
+#[Table(
+    name: 'coupon',
+    options: ['comment' => 'Coupon table']
+)]
+#[UniqueConstraint(columns: ['code'])]
+#[HasLifecycleCallbacks]
 class Coupon
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+//    #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
@@ -41,6 +54,21 @@ class Coupon
 
     #[ORM\Column]
     private int $discount;
+
+    #[ORM\Column(
+        name: 'created_at',
+        type: 'datetimetz',
+        options: ['comment' => 'Date of creation'],
+    )]
+    protected ?DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(
+        name: 'updated_at',
+        type: 'datetimetz',
+        options: ['comment' => 'Modification date']
+    )]
+    protected DateTimeInterface $updatedAt;
+
 
     public function getId(): int
     {
@@ -100,5 +128,45 @@ class Coupon
         $this->discount = $discount;
 
         return $this;
+    }
+
+    #[PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        if ($this->createdAt === null) {
+            $this->createdAt = new DateTime();
+        }
+    }
+
+    #[PrePersist]
+    #[PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTime();
+    }
+
+    /* Setters */
+    public function setCreatedAt(DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
     }
 }

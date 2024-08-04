@@ -26,7 +26,7 @@ final class ProductRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function exists(string $value, string $field): bool
+    public function exists(int|string $value, string $field): bool
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->where('p.'.$field.' = :value')
