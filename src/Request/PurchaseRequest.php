@@ -14,7 +14,7 @@ class PurchaseRequest extends BaseRequest
 {
     #[Assert\NotBlank]
     #[Assert\Type('integer')]
-//    #[CheckEntity(Product::class, 'exists', 'id')]
+    #[CheckEntity(Product::class, 'exists', 'id')]
     public mixed $product;
 
     #[Assert\NotBlank]
@@ -22,7 +22,7 @@ class PurchaseRequest extends BaseRequest
     public mixed $taxNumber;
 
     #[Assert\Type('string')]
-//    #[CheckEntity(Coupon::class, 'exists', 'id')]
+    #[CheckEntity(Coupon::class, 'exists', 'code')]
     public mixed $couponCode;
 
     #[Assert\Type('string')]
