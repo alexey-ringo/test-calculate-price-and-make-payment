@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-readonly class CalculatePriceDto
+readonly class CalculatePriceDto implements PurchaseDtoInterface
 {
     public function __construct(
         private int    $product,

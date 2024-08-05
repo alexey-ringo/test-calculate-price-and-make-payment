@@ -15,11 +15,10 @@ class ExceptionListener
     {
         $exception = $event->getThrowable();
         $request   = $event->getRequest();
-//dd(get_class($exception));
+
         $responseBody = [
             'message'       => $exception->getMessage(),
             'code'          => $exception->getCode(),
-//            'trace'          => $exception->getTrace(),
         ];
         if ($exception instanceof ApiException) {
             $responseBody['errors'] = $exception->getDetails();
