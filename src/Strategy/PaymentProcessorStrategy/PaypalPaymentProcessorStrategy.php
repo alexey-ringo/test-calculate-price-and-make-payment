@@ -22,7 +22,7 @@ final class PaypalPaymentProcessorStrategy implements PaymentProcessorStrategyIn
         try {
             $this->paymentProcessor->pay((int) $amount);
         } catch (Throwable $e) {
-            throw new ApiException('Payment processing error', 422, ['message' => $e->getMessage()]);
+            throw new ApiException('Payment processing error', 400, ['message' => $e->getMessage()]);
         }
 
         return PaymentProcessorEnum::PAYPAL->value;

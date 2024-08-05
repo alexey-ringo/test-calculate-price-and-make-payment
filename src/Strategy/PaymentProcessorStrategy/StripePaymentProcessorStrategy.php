@@ -20,7 +20,7 @@ final class StripePaymentProcessorStrategy implements PaymentProcessorStrategyIn
     {
         $result = $this->paymentProcessor->processPayment($amount);
         if ($result === false) {
-            throw new ApiException('Payment processing error', 422, ['message' => 'Purchase amount cannot be less than 100 Euro']);
+            throw new ApiException('Payment processing error', 400, ['message' => 'Purchase amount cannot be less than 100 Euro']);
         }
 
         return PaymentProcessorEnum::STRIPE->value;

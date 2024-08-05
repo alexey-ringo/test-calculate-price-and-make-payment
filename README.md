@@ -1,4 +1,13 @@
-# Написать Symfony REST-приложение для расчета цены продукта и проведения оплаты
+# TODO для развертывания проекта:
+- Склонировать репизиторий
+- Создать в корне проекта файл ``` .env.local ``` и наполнить его ``` APP_ENV=dev ``` ``` APP_SECRET=6a79a0699a16930beedc42f921313113 ``` ``` DATABASE_URL=postgres://user:password@postgres-calculate-and-payment/calculate_and_payment_db ```
+- Запустить команду ``` make up ```
+- Запустить команду ``` composer install ```
+- Запустить команду ``` php bin/console doctrine:migrations:migrate ```
+- Запустить команду ``` php bin/console default-data:set ```
+- Все эндпойнты соответствуют ТЗ ниже
+
+# Технической задание - Написать Symfony REST-приложение для расчета цены продукта и проведения оплаты
 
 Необходимо реализовать 2 эндпоинта:
 1. POST: для расчёта цены
