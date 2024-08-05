@@ -4,7 +4,6 @@ namespace App\Request;
 
 use App\Exception\ApiException;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -24,8 +23,6 @@ abstract class BaseRequest
     {
         $validateResult = $this->validator->validate($this);
 
-//        $messages = ['message' => 'validation_failed', 'errors' => []];
-
         /** @var ConstraintViolation $validateResult */
 
         $errors = [];
@@ -39,11 +36,6 @@ abstract class BaseRequest
 
         if (count($errors) > 0) {
             throw new ApiException('Validation failed', 422, $errors);
-//            $response = new JsonResponse($messages, 201);
-//            $response->send();
-//
-//            exit;
-//            throw new ValidationException($messages['errors']);
         }
 
     }
@@ -52,7 +44,7 @@ abstract class BaseRequest
     {
         return Request::createFromGlobals();
     }
-//
+
     protected function populate(): void
     {
         foreach ($this->getRequest()->toArray() as $property => $value) {
@@ -61,7 +53,7 @@ abstract class BaseRequest
             }
         }
     }
-//
+
     protected function autoValidateRequest(): bool
     {
         return true;
