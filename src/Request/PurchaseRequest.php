@@ -5,6 +5,7 @@ namespace App\Request;
 
 use App\Constraint\CheckEntity;
 use App\Constraint\CheckEnum;
+use App\Constraint\CheckTaxNumber;
 use App\Entity\Coupon;
 use App\Entity\Product;
 use App\Enum\PaymentProcessorEnum;
@@ -19,6 +20,8 @@ class PurchaseRequest extends BaseRequest
 
     #[Assert\NotBlank]
     #[Assert\Type('string')]
+    #[Assert\Length(min: 2)]
+    #[CheckTaxNumber]
     public mixed $taxNumber;
 
     #[Assert\Type('string')]
